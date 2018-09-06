@@ -1,14 +1,9 @@
-The function is only 13 lines...lets put it on NPM!
+<img src="https://i.imgur.com/3xYKh5D.png" align="center" style="text-align:center"/>
 
 # Usage
 
-Node.js:
-
     var functorize = require('functorize') 
-
-Browser:
-
-    <script src="https://unpkg.com/functorize"/>
+    // or <script src="https://unpkg.com/functorize"/>
 
 # Smart arrays and object-wrapping 
 

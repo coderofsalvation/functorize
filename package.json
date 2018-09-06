@@ -1,0 +1,19 @@
+{
+  "name": "functorize",
+  "version": "1.0.0",
+  "description": "decorate javascript arrays & objects with functions & metadata automagically (to write less code)",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coderofsalvation/functorize.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coderofsalvation/functorize/issues"
+  },
+  "homepage": "https://github.com/coderofsalvation/functorize#readme"
+}
