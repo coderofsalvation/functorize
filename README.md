@@ -1,4 +1,6 @@
-<img src="https://i.imgur.com/3xYKh5D.png" align="center" style="text-align:center"/>
+decorate javascript arrays & objects with functions & metadata automagically (to write less code)
+
+<center> <img src="https://i.imgur.com/3xYKh5D.png" align="center" style="text-align:center"/> </center>
 
 # Usage
 
