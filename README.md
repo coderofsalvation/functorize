@@ -32,9 +32,10 @@ decorate javascript arrays & objects with functions & metadata automagically (to
 
 # Decorate array inserts with defaults 
 
-    var arr = []
+    var arr      = []
+    var defaults = { date: new Date() } 
+
     functorize( arr, {
-      defaults: { date: new Date() }, 
       push: function(old,i){
         old( Object.assign(i, defaults) )
         return this
