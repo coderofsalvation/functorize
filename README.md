@@ -60,13 +60,13 @@ decorate javascript arrays & objects with functions & metadata automagically (to
     
     functorize(json, userModel ) 
 
-    console.log(json.type)                        // user
-    console.log(json.emailProvider)               // gmail.com
+    console.log(json.type)                          // user
+    console.log(json.emailProvider())               // gmail.com
 
 > NOTE: The original Object and Array prototypes untouched 
 
-    console.log( Object.keys(json).length )       // 1
-    console.log( Object.prototype.emailProvider ) // undefined (we cloned the prototype)
+    console.log( Object.keys(json).length )         // 1
+    console.log( Object.prototype.emailProvider() ) // undefined (we cloned the prototype)
 
 # Why
 
