@@ -6,6 +6,10 @@ decorate javascript arrays & objects with functions & metadata automagically (to
 
     var functorize = require('functorize') 
     // or <script src="https://unpkg.com/functorize"/>
+     
+    functorize( your_array_or_object, { ... } )
+
+> NOTE: this leaves the original array_or_object untouched 
 
 # Smart arrays and object-wrapping 
 
