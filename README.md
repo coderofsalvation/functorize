@@ -9,7 +9,7 @@ decorate javascript arrays & objects with functions & metadata automagically (to
      
     functorize( your_array_or_object, { ... } )
 
-> NOTE: this leaves the original array_or_object untouched 
+> NOTE: this leaves the original array_or_object untouched (unlike ES6 spread, Object.assign)
 
 # Smart arrays and object-wrapping 
 
