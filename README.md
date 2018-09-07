@@ -9,8 +9,6 @@ decorate javascript arrays & objects with functions & metadata automagically (to
      
     functorize( your_array_or_object, { ... } )
 
-> NOTE: this leaves the original array_or_object untouched (unlike ES6 spread, Object.assign)
-
 # Smart arrays and object-wrapping 
 
     var arr = []
@@ -33,6 +31,31 @@ decorate javascript arrays & objects with functions & metadata automagically (to
 
 * We override push() and make it chainable
 * we always wrap a model around data when inserted
+
+# Why 
+
+* 💛💛💛💛 minimal syntax 
+* 💛💛💛💛 re-use of utility-functionbelts 
+* 💛💛💛💛 no more free-floating utility functions 
+* many scenarios do not need ES6 OO boilerplate
+* function composition instead of OO is fine for utility functions
+* delivers the original ES5 prototype-idea, but without side effects
+
+| Strategy          | boilerplate | inheritance | polymorphism | overrides  | encapsulation | native side-effects |
+|-------------------|-------------|-------------|--------------|------------|---------------|---------------------|
+| Functorize        |             | no          | no           | wrapping   | yes, hoisting | no                  |
+| ES6 classes       | ++++        | classes     | yes          | super()    | yes, private  | no                  |
+| ES6 spread        |             | yes         | yes          | no         | no            | yes                 |
+| ES5 Object.assign |             | no          | no           | no         | no            | yes                 |
+
+> NOTE: as in: 
+
+    var a = [1, 2]; 
+    a.foo           = () => console.log('hello')
+    a.__proto__.bar = () => console.log('hello')
+    var b = []
+    console.log(a.length)  // 3
+    console.log(b.bar)     // [Function] (whaaaat?)
 
 # Decorate array inserts with defaults 
 
@@ -68,14 +91,22 @@ decorate javascript arrays & objects with functions & metadata automagically (to
     console.log( Object.keys(json).length )         // 1
     console.log( Object.prototype.emailProvider() ) // undefined (we cloned the prototype)
 
-# Why
+# Function 
 
-* 💛💛💛💛 minimal syntax 
-* 💛💛💛💛 re-use of utility-functionbelts 
-* 💛💛💛💛 no more free-floating utility functions 
-* common scenario which does not need ES6 OO boilerplate
-* function composition instead of OO is fine for utility functions
-* no side effects: `.prototype` and `__proto__` (ES5) usually mutates prototype of native datatypes (Object, Array)
+No idea why you'd want this, but here's a factory-ish pattern
+
+    var Car = function(opts){
+      return opts
+    }
+
+    functorize(Car, {
+        createBMW: () => new Car({type:"bmw"})
+    })
+
+    var whitelabelcar = new Car()
+    var bmw           = Car.createBMW()
+
+# date
 
 # Credits
 
