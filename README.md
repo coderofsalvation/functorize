@@ -45,10 +45,10 @@ decorate javascript arrays & objects with functions & metadata automagically (to
 |-------------------|-------------|-------------|--------------|------------|---------------|---------------------|
 | Functorize        |             | no          | no           | wrapping   | yes, hoisting | no                  |
 | ES6 classes       | ++++        | classes     | yes          | super()    | yes, private  | no                  |
-| ES6 spread        |             | yes         | yes          | no         | no            | yes                 |
+| ES6 spread        |             | no          | no           | no         | no            | yes                 |
 | ES5 Object.assign |             | no          | no           | no         | no            | yes                 |
 
-> NOTE: as in: 
+> NOTE: example side-effects 
 
     var a = [1, 2]; 
     a.foo           = () => console.log('hello')
