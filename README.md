@@ -91,6 +91,26 @@ decorate javascript arrays & objects with functions & metadata automagically (to
     console.log( Object.keys(json).length )         // 1
     console.log( Object.prototype.emailProvider() ) // undefined (we cloned the prototype)
 
+# State machines
+
+  var obj = {
+      state:"inited" , 
+      set state(val){ throw 'directly setting value not allowed' } 
+  }
+
+  functorize(obj, {
+      create() { this.state = 'created' }, 
+      destroy(){
+          if( this.state != 'created' ) throw 'destroy() is impossible in state '+this.state
+          this.state = 'destroyed'
+      }
+  })
+  
+  obj.state = 'foo'                  // not allowed
+  obj.create()
+  obj.destroy()                      // only possible after calling create()
+  console.log("state = "+obj.state)  // is now 'destroyed'
+
 # Function 
 
 No idea why you'd want this, but here's a factory-ish pattern
@@ -105,8 +125,6 @@ No idea why you'd want this, but here's a factory-ish pattern
 
     var whitelabelcar = new Car()
     var bmw           = Car.createBMW()
-
-# date
 
 # Credits
 

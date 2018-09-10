@@ -31,3 +31,22 @@ functorize(f, {
 f.bar()
 
 if( Function.prototype.bar ) throw 'original prototype was touched'
+
+var obj = {
+    state:"inited" , 
+    set state(val){
+        throw 'directly setting value not allowed'
+    }, 
+}
+functorize(obj, {
+    create() { this.state = 'created' }, 
+    destroy(){
+        if( this.state != 'created' ) throw 'destroy() is impossible in state '+this.state
+        this.state = 'destroyed'
+    }
+})
+
+//obj.state = 'foo'                  // not allowed
+obj.create()
+obj.destroy()                      // only possible after calling create()
+console.log("state = "+obj.state)  // is now 'destroyed'
