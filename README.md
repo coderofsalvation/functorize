@@ -1,13 +1,13 @@
-decorate javascript arrays & objects with functions & metadata automagically (to write less code)
+decorate javascript arrays & objects with functions & metadata automagically (and write less code)
 
 <center> <img src="https://i.imgur.com/3xYKh5D.png" align="center" style="text-align:center"/> </center>
 
 # Usage
 
-    var functorize = require('functorize') 
+    var F = require('functorize') 
     // or <script src="https://unpkg.com/functorize"/>
      
-    functorize( your_array_or_object, { ... } )
+    F( your_array_or_object, { ... } )
 
 # Smart arrays and object-wrapping 
 
@@ -16,9 +16,9 @@ decorate javascript arrays & objects with functions & metadata automagically (to
        toggle: () => console.log("toggle!")
     }
      
-    functorize( arr, {
-      push: function(old,item){
-        old( functorize(item, myModel) )
+    F( arr, {
+      push(old,item){
+        old( F(item, myModel) )
         return this
       }
     })
@@ -30,7 +30,8 @@ decorate javascript arrays & objects with functions & metadata automagically (to
 > Wow! What happened here?
 
 * We override push() and make it chainable
-* we always wrap a model around data when inserted
+* We always wrap a model around data when inserted
+* Data and functions are separated
 
 # Why 
 
@@ -48,22 +49,22 @@ decorate javascript arrays & objects with functions & metadata automagically (to
 | ES6 spread        |             | no          | no           | no         | no            | yes                 |
 | ES5 Object.assign |             | no          | no           | no         | no            | yes                 |
 
-> NOTE: example side-effects 
+> NOTE: these are native side-effects:
 
     var a = [1, 2]; 
     a.foo           = () => console.log('hello')
     a.__proto__.bar = () => console.log('hello')
     var b = []
-    console.log(a.length)  // 3
-    console.log(b.bar)     // [Function] (whaaaat?)
+    console.log(a.length)  // 3 (data+functions are not separated)
+    console.log(b.bar)     // [Function] (??? String.prototype.bar was set?..)
 
 # Decorate array inserts with defaults 
 
     var arr      = []
     var defaults = { date: new Date() } 
 
-    functorize( arr, {
-      push: function(old,i){
+    F( arr, {
+      push(old,i){
         old( Object.assign(i, defaults) )
         return this
       }, 
@@ -78,10 +79,10 @@ decorate javascript arrays & objects with functions & metadata automagically (to
 
     var userModel = {
        type: 'user', 
-       emailProvider: function(){ this.email.replace(/.*@/, '') }
+       emailProvider(){ this.email.replace(/.*@/, '') }
     }
     
-    functorize(json, userModel ) 
+    F(json, userModel ) 
 
     console.log(json.type)                          // user
     console.log(json.emailProvider())               // gmail.com
@@ -91,25 +92,16 @@ decorate javascript arrays & objects with functions & metadata automagically (to
     console.log( Object.keys(json).length )         // 1
     console.log( Object.prototype.emailProvider() ) // undefined (we cloned the prototype)
 
-# State machines
+# Decorate string with utilities
 
-  var obj = {
-      state:"inited" , 
-      set state(val){ throw 'directly setting value not allowed' } 
-  }
+    var strutils = {
+        truncate(){ return this.substr(0, 2) + '...' }
+    }
 
-  functorize(obj, {
-      create() { this.state = 'created' }, 
-      destroy(){
-          if( this.state != 'created' ) throw 'destroy() is impossible in state '+this.state
-          this.state = 'destroyed'
-      }
-  })
-  
-  obj.state = 'foo'                  // not allowed
-  obj.create()
-  obj.destroy()                      // only possible after calling create()
-  console.log("state = "+obj.state)  // is now 'destroyed'
+    var str = "lorem ipsum" 
+    F( str, strutils )  
+    console.log( str.truncate(1) )             // lo...
+    console.log( String.prototype.truncate )   // undefined
 
 # Function 
 
@@ -119,7 +111,7 @@ No idea why you'd want this, but here's a factory-ish pattern
       return opts
     }
 
-    functorize(Car, {
+    F(Car, {
         createBMW: () => new Car({type:"bmw"})
     })
 

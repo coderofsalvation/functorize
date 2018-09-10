@@ -1,14 +1,14 @@
-var functorize = require('./')
+var F = require('./')
 
 var arr = []
 var myModel = {
-   toggle: () => console.log("toggle!")
+   toggle(){ console.log("toggle!") }
 }
  
-functorize( arr, {
+F( arr, {
   foo: () => console.log("foo!"), 
-  push: function(old,item){
-    old( functorize({data:item}, myModel) )
+  push(old, item){
+    old( F({data:item}, myModel) )
     return this
   }
 })
@@ -24,7 +24,7 @@ var f = function foo(){
   return 1      
 }
 
-functorize(f, {
+F(f, {
     bar: () => console.log("bar!")
 })
 
@@ -32,21 +32,11 @@ f.bar()
 
 if( Function.prototype.bar ) throw 'original prototype was touched'
 
-var obj = {
-    state:"inited" , 
-    set state(val){
-        throw 'directly setting value not allowed'
-    }, 
+var strutils = {
+    truncate(){ return this.substr(0, 2) + '...' }
 }
-functorize(obj, {
-    create() { this.state = 'created' }, 
-    destroy(){
-        if( this.state != 'created' ) throw 'destroy() is impossible in state '+this.state
-        this.state = 'destroyed'
-    }
-})
 
-//obj.state = 'foo'                  // not allowed
-obj.create()
-obj.destroy()                      // only possible after calling create()
-console.log("state = "+obj.state)  // is now 'destroyed'
+var str = "lorem ipsum" 
+F( str, strutils )  
+console.log( str.truncate(1) )             // lo...
+console.log( String.prototype.truncate )   // undefined
