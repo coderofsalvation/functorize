@@ -16,6 +16,7 @@ F( arr, {
 arr.push({foo:123})
    .push({foo:143})
 arr[0].toggle()
+console.log( Object.keys(arr[0]).length )
 console.dir(arr)
 
 if( arr.length != 2 || Array.prototype.foo ) throw 'original object or prototype was touched! not cool!'

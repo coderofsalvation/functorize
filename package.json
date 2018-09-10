@@ -1,6 +1,6 @@
 {
   "name": "functorize",
-  "version": "1.0.26",
+  "version": "1.0.27",
   "description": "decorate javascript arrays & objects with functions & metadata automagically (and write less code)",
   "main": "index.js",
   "scripts": {

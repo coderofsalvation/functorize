@@ -2,14 +2,20 @@ decorate javascript arrays & objects with functions & metadata automagically (an
 
 <center> <img src="https://i.imgur.com/3xYKh5D.png" align="center" style="text-align:center"/> </center>
 
-# Usage
+# Smart strings 
 
-    var F = require('functorize') 
-    // or <script src="https://unpkg.com/functorize"/>
+    var F = require('functorize') // or <script src="https://unpkg.com/functorize"/>
      
-    F( your_array_or_object, { ... } )
+    var str = "lorem ipsum" 
 
-# Smart arrays and object-wrapping 
+    F( str, {
+        truncate(){ return this.substr(0, 2) + '...' }
+    })
+
+    console.log( str.truncate(1) )             // lo...
+    console.log( String.prototype.truncate )   // undefined <- good
+
+# Smart arrays
 
     var arr = []
     var myModel = {
@@ -29,9 +35,14 @@ decorate javascript arrays & objects with functions & metadata automagically (an
 
 > Wow! What happened here?
 
-* We override push() and make it chainable
 * We always wrap a model around data when inserted
+* We override push() and make it chainable
 * Data and functions are separated
+
+Also, data & functions are still separated:
+
+    console.log( arr.length                 )   // 2
+    console.log( Object.keys(arr[0]).length )   // 1
 
 # Why 
 
